@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computational Graph</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .graph-container {
+            width: 100%;
+            height: 600px;
+            background-color: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        .node {
+            position: absolute;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 10px;
+            background-color: #fff;
+            cursor: pointer;
+            user-select: none;
+            text-align: center;
+            font-weight: bold;
+            font-size: 12px;
+            min-width: 60px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .topic-node {
+            background-color: #e8f5e8;
+            border-color: #4CAF50;
+            border-radius: 4px;
+        }
+        .agent-node {
+            background-color: #e3f2fd;
+            border-color: #2196F3;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+        .edge {
+            position: absolute;
+            height: 2px;
+            background-color: #333;
+            transform-origin: left center;
+            pointer-events: none;
+        }
+        .edge::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -4px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid #333;
+            border-top: 4px solid transparent;
+            border-bottom: 4px solid transparent;
+        }
+        .graph-title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .value-display {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            color: #666;
+            background-color: rgba(255,255,255,0.8);
+            padding: 2px 6px;
+            border-radius: 3px;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="graph-title">
+        <h2>Computational Graph Visualization</h2>
+        <p>Mathematical Expression: {{EXPRESSION}}</p>
+    </div>
+    
+    <div class="graph-container" id="graphContainer">
+        {{GRAPH_CONTENT}}
+    </div>
+
+    <script>
+        // Make nodes draggable
+        document.querySelectorAll('.node').forEach(node => {
+            let isDragging = false;
+            let startX, startY, startLeft, startTop;
+            
+            node.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                startX = e.clientX;
+                startY = e.clientY;
+                startLeft = parseInt(node.style.left);
+                startTop = parseInt(node.style.top);
+                node.style.zIndex = '1000';
+            });
+            
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+                node.style.left = (startLeft + dx) + 'px';
+                node.style.top = (startTop + dy) + 'px';
+                
+                // Update connected edges (simplified)
+                updateEdges();
+            });
+            
+            document.addEventListener('mouseup', () => {
+                if (isDragging) {
+                    isDragging = false;
+                    node.style.zIndex = 'auto';
+                }
+            });
+        });
+        
+        function updateEdges() {
+            // This would update edge positions based on node positions
+            // Implementation depends on your specific graph structure
+        }
+        
+        
+    </script>
+</body>
+</html>
+

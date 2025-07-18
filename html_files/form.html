@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Forms</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            margin: 0;
+        }
+        .form-container {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .form-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="file"],
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .publish-btn {
+            background-color: #2196F3;
+        }
+        .publish-btn:hover {
+            background-color: #1976D2;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-title">Configuration Upload</div>
+        <form action="http://localhost:8080/upload" method="post" enctype="multipart/form-data" target="graph">
+            <label for="configFile">Choose Configuration File:</label>
+            <input type="file" id="configFile" name="configFile" accept=".conf,.txt" required>
+            <button type="submit" onclick="clearTopicsTable()">Deploy</button>
+        </form>
+    </div>
+
+    <div class="form-container">
+        <div class="form-title">Publish Message to Topic</div>
+        <form action="http://localhost:8080/publish" method="get" target="topics">
+            <label for="topicName">Topic Name:</label>
+            <input type="text" id="topicName" name="topic" placeholder="Enter topic name" required>
+            
+            <label for="message">Message:</label>
+            <input type="text" id="message" name="message" placeholder="Enter message value" required>
+            
+            <button type="submit" class="publish-btn">Send</button>
+        </form>
+    </div>
+
+
+
+    <script>
+        function clearTopicsTable() {
+            try {
+                var topicsFrame = parent.frames['topics'];
+                if (topicsFrame) {
+                    topicsFrame.location.href = '/app/temp.html';
+                }
+            } catch (e) {
+                console.log('Could not clear topics table:', e);
+            }
+        }
+    </script>
+</body>
+</html>
+
